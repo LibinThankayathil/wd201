@@ -62,7 +62,7 @@ const todoList = () => {
         }
         display += listItem;
       }
-      return display;
+      return display.trim();
     }
   
     return {
