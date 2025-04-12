@@ -1,0 +1,16 @@
+{
+  "name": "todo-cli",
+  "version": "1.0.0",
+  "description": "simple to-do app",
+  "main": "todo.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Libin T <libinthankayathil@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "jest": "^29.7.0"
+  },
+  "devDependencies": {
+  }
+}
