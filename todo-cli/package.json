@@ -11,6 +11,11 @@
   "dependencies": {
     "jest": "^29.7.0"
   },
-  "devDependencies": {
-  }
+  "lint-staged": {
+    "*.js": [
+      "eslint",
+      "prettier --write ."
+    ]
+  },
+  "devDependencies": {}
 }
