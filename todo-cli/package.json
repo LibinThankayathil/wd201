@@ -4,12 +4,19 @@
   "description": "simple to-do app",
   "main": "todo.js",
   "scripts": {
-    "test": "jest"
+    "db:create:test": "NODE_ENV=test npx sequelize-cli db:create",
+    "pretest": "NODE_ENV=test npx sequelize-cli db:drop && NODE_ENV=test npx sequelize-cli db:create",
+    "test": "NODE_ENV=test jest --detectOpenHandles",
+    "prepare": "husky install"
   },
   "author": "Libin T <libinthankayathil@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "jest": "^29.7.0"
+    "jest": "^29.7.0",
+    "minimist": "^1.2.8",
+    "pg": "^8.14.1",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.7"
   },
   "lint-staged": {
     "*.js": [
@@ -17,5 +24,12 @@
       "prettier --write ."
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@eslint/js": "^9.24.0",
+    "@eslint/json": "^0.11.0",
+    "eslint": "^9.24.0",
+    "globals": "^16.0.0",
+    "prettier": "^3.5.3",
+    "sequelize-cli": "^6.6.2"
+  }
 }
