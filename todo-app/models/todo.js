@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       return this.destroy({ where: { id: id } });
     }
 
-    static getAllTodos(){
+    static getAllTodos() {
       return this.findAll();
     }
     static addTodo({ title, dueDate }) {
@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Todo",
-    }
+    },
   );
   return Todo;
 };

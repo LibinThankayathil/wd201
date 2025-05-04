@@ -29,7 +29,7 @@ describe("Todo Application", function () {
     });
     expect(response.statusCode).toBe(200);
     expect(response.header["content-type"]).toBe(
-      "application/json; charset=utf-8"
+      "application/json; charset=utf-8",
     );
     const parsedResponse = JSON.parse(response.text);
     expect(parsedResponse.id).toBeDefined();
@@ -82,12 +82,11 @@ describe("Todo Application", function () {
     const parsedResponse = JSON.parse(response.text);
     const todoID = parsedResponse.id;
 
-    const deleteTodo = await agent
-      .delete(`/todos/${todoID}`);
-      
-      const deletedResponse = await agent.get("/todos");
-      const parsedDeletedResponse = JSON.parse(deletedResponse.text);
-  
-      expect(parsedDeletedResponse.length).toBe(4);
+    const deleteTodo = await agent.delete(`/todos/${todoID}`);
+
+    const deletedResponse = await agent.get("/todos");
+    const parsedDeletedResponse = JSON.parse(deletedResponse.text);
+
+    expect(parsedDeletedResponse.length).toBe(4);
   });
 });
