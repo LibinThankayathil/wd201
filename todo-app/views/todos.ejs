@@ -10,7 +10,7 @@ let dueLaterCount = 0;
 
 
 <div class="flex items-center gap-2 w-fit mb-2">
-<h5>Over Due</h5>
+<h5>Overdue</h5>
 <div id = "count-overdue" class="w-6 h-6 bg-gray-200 text-gray-800 rounded-sm flex items-center justify-center text-sm font-medium">
     <% for (var i = 0; i < allTodos.length; i++) { %>
         <% if (new Date(allTodos[i].dueDate) < today) { %>
