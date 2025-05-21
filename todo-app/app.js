@@ -1,16 +1,21 @@
 const express = require("express");
 const app = express();
+var csrf = require("tiny-csrf");
+var cookieParser = require("cookie-parser");
 const { Todo } = require("./models");
 const bodyParser = require("body-parser");
 const path = require("path");
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser("shh! it's a secret"));
+app.use(csrf("uX2f9vX7LmD3yNq5HvJw8KsRbZ1eT4cA", ["POST", "PUT", "DELETE"]));
 
 app.set("view engine", "ejs");
 
 app.get("/", async (request, response) => {
   const allTodos = await Todo.getAllTodos();
   if (request.accepts("html")) {
-    response.render("index", { allTodos });
+    response.render("index", { allTodos, csrfToken: request.csrfToken() });
   } else {
     response.json({ allTodos });
   }
@@ -46,17 +51,17 @@ app.get("/todos/:id", async function (request, response) {
 app.post("/todos", async function (request, response) {
   try {
     const todo = await Todo.addTodo(request.body);
-    return response.json(todo);
+    return response.redirect("/");
   } catch (error) {
     console.log(error);
     return response.status(422).json(error);
   }
 });
 
-app.put("/todos/:id/markAsCompleted", async function (request, response) {
+app.put("/todos/:id", async function (request, response) {
   const todo = await Todo.findByPk(request.params.id);
   try {
-    const updatedTodo = await todo.markAsCompleted();
+    const updatedTodo = await todo.setCompletionStatus(request.body.completed);
     return response.json(updatedTodo);
   } catch (error) {
     console.log(error);
