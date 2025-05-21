@@ -12,24 +12,6 @@
         var token = document
             .querySelector('meta[name="csrf-token"]')
             .getAttribute("content");
-
-        function validateForm() {
-            const title = document.querySelector('input[name="title"]').value.trim();
-            const dueDate = document.querySelector('input[name="dueDate"]').value;
-            
-            if (!title) {
-                alert("Title cannot be empty!");
-                return false;
-            }
-            
-            if (!dueDate) {
-                alert("Due date is required!");
-                return false;
-            }
-            
-            return true;
-        }
-
         function updateTodo(id) {
             const checkbox = document.querySelector(`#todo-checkbox-${id}`);
             fetch(`/todos/${id}`, {
@@ -68,20 +50,31 @@
     <div class="grid grid-cols-6">
         <div class="col-start-3 col-span-2">
             <%- include('header.ejs') %>
-            <form action="/todos" method="post" onsubmit="return validateForm()">
+            <form action="/todos" method="post" id="todo-form">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>"/>
                 <div class="flex gap-2 py-4">
                     <div class="flex-auto ">
-                        <input type="text" name="title" placeholder="What's next?" class="border border-gray-300 rounded text-gray-900 w-full p-2 text-sm" required/>
+                        <input type="text" name="title" id="title" placeholder="What's next?" class="border border-gray-300 rounded text-gray-900 w-full p-2 text-sm" required/>
                     </div>
                     <div class="flex-auto">
-                        <input type="date" name="dueDate" class="border border-gray-300 rounded text-gray-900 w-full p-2 text-sm" required/>
+                        <input type="date" name="dueDate" id="dueDate" class="border border-gray-300 rounded text-gray-900 w-full p-2 text-sm" required/>
                     </div>  
                     <div class="flex-none">
                         <button type="submit" class="bg-green-600 text-white px-5 py-1.5 rounded font-medium mr-2 mb-2">Add</button>
                     </div>
                 </div>
             </form>
+            <script>
+                document.getElementById("todo-form").addEventListener("submit", function(event) {
+                    const title = document.getElementById("title").value.trim();
+                    const dueDate = document.getElementById("dueDate").value;
+                    
+                    if (!title || !dueDate) {
+                        event.preventDefault();
+                        return false;
+                    }
+                });
+            </script>
             <div>
                 
                 <%- include('todos.ejs') %>
