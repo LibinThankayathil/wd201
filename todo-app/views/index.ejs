@@ -12,6 +12,24 @@
         var token = document
             .querySelector('meta[name="csrf-token"]')
             .getAttribute("content");
+
+        function validateForm() {
+            const title = document.querySelector('input[name="title"]').value.trim();
+            const dueDate = document.querySelector('input[name="dueDate"]').value;
+            
+            if (!title) {
+                alert("Title cannot be empty!");
+                return false;
+            }
+            
+            if (!dueDate) {
+                alert("Due date is required!");
+                return false;
+            }
+            
+            return true;
+        }
+
         function updateTodo(id) {
             const checkbox = document.querySelector(`#todo-checkbox-${id}`);
             fetch(`/todos/${id}`, {
@@ -50,7 +68,7 @@
     <div class="grid grid-cols-6">
         <div class="col-start-3 col-span-2">
             <%- include('header.ejs') %>
-            <form action="/todos" method="post">
+            <form action="/todos" method="post" onsubmit="return validateForm()">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>"/>
                 <div class="flex gap-2 py-4">
                     <div class="flex-auto ">
