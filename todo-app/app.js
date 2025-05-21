@@ -50,8 +50,17 @@ app.get("/todos/:id", async function (request, response) {
 
 app.post("/todos", async function (request, response) {
   try {
+    if (!request.body.title || !request.body.title.trim()) {
+      return response.status(422).json({ error: "Title is required" });
+    }
+    if (!request.body.dueDate) {
+      return response.status(422).json({ error: "Due date is required" });
+    }
     const todo = await Todo.addTodo(request.body);
-    return response.redirect("/");
+    if (request.accepts("html")) {
+      return response.redirect("/");
+    }
+    return response.json(todo);
   } catch (error) {
     console.log(error);
     return response.status(422).json(error);
