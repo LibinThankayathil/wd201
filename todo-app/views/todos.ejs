@@ -90,7 +90,6 @@
     
     </div>
     <ul class="list-none">
-        <li class="Todo-Item">
 
             <% for (var i = 0; i < allTodos.length; i++) { %>
                 <% if (new Date(allTodos[i].dueDate) > today) { %>
@@ -123,7 +122,6 @@
     
     </div>
     <ul class="list-none">
-        <li class="Todo-Item">
             <% for (var i = 0; i < allTodos.length; i++) { %>
                 <% if (allTodos[i].completed) { %>
                     <li class="Todo-Item">
