@@ -29,6 +29,17 @@
                 <button class="bg-green-600 text-white px-5 py-1.5 rounded font-medium mr-2 mb-2" type="submit">Sign in</button>
                 </div>
             </form>
+            <% if (success_msg) { %>
+  <div class="alert alert-success"><%= success_msg %></div>
+<% } %>
+
+<% if (error_msg) { %>
+  <div class="alert alert-danger"><%= error_msg %></div>
+<% } %>
+
+<% if (error) { %>
+  <div class="alert alert-danger"><%= error %></div>
+<% } %>
         </div>
     </div>
 </body>

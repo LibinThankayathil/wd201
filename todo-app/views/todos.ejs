@@ -26,6 +26,7 @@
 
             <% for (var i = 0; i < allTodos.length; i++) { %>
                 <% if (new Date(allTodos[i].dueDate) < today && loggedInUser === allTodos[i].userId) { %>
+                    <li class="Todo-Item">
                 <div class="flex items-center w-fit my-2 px-2 py-1 hover:bg-purple-50 rounded">
                     <input id="todo-checkbox-<%= allTodos[i].id %>" type="checkbox" <%= allTodos[i].completed ? "checked" : "" %> onclick="updateTodo(<%= allTodos[i].id %>)" name=""  class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300">
                     <label for="todo-checkbox-<%= allTodos[i].id %>" class="ml-2 text-sm text-gray-600 cursor-pointer">
@@ -59,7 +60,7 @@
 
             <% for (var i = 0; i < allTodos.length; i++) { %>
                 <% if (stripTime(new Date(allTodos[i].dueDate)).getTime() === today.getTime() && loggedInUser === allTodos[i].userId) { %>
-
+                    <li class="Todo-Item">
                 <div class="flex items-center w-fit my-2 px-2 py-1 hover:bg-purple-50 rounded">
                     <input id="todo-checkbox-<%= allTodos[i].id %>" type="checkbox" <%= allTodos[i].completed ? "checked" : ""  %> onclick="updateTodo(<%= allTodos[i].id %>)" type="checkbox" name="" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300">
                     <label for="todo-checkbox-<%= allTodos[i].id %>" class="ml-2 text-sm text-gray-600 cursor-pointer">
@@ -92,7 +93,7 @@
 
             <% for (var i = 0; i < allTodos.length; i++) { %>
                 <% if (new Date(allTodos[i].dueDate) > today && loggedInUser === allTodos[i].userId) { %>
-
+                    <li class="Todo-Item">
                 <div class="flex items-center w-fit my-2 px-2 py-1 hover:bg-purple-50 rounded">
                     <input  id="todo-checkbox-<%= allTodos[i].id %>" type="checkbox" <%= allTodos[i].completed ? "checked" : "" %> onclick="updateTodo(<%= allTodos[i].id %>)" type="checkbox" name="" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300">
                     <label for="todo-checkbox-<%= allTodos[i].id %>" class="ml-2 text-sm text-gray-600 cursor-pointer">
@@ -123,6 +124,7 @@
     <ul class="list-none">
             <% for (var i = 0; i < allTodos.length; i++) { %>
                 <% if (allTodos[i].completed && loggedInUser === allTodos[i].userId) { %>
+                    <li class="Todo-Item">
                     <span style="text-decoration: line-through;"><%= allTodos[i].title %></span>
                      </li>  
                 <% } %>  

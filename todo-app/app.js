@@ -17,6 +17,8 @@ const session = require("express-session");
 const LocalStrategy = require("passport-local");
 const bcrypt = require("bcrypt");
 
+const flash = require("connect-flash");
+
 const saltRounds = 10;
 app.use(
   session({
@@ -29,6 +31,13 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash("success_msg");
+  res.locals.error_msg = req.flash("error_msg");
+  res.locals.error = req.flash("error"); // Often used with Passport
+  next();
+});
 
 passport.use(
   new LocalStrategy(
@@ -72,9 +81,7 @@ passport.deserializeUser((id, done) => {
 app.set("view engine", "ejs");
 
 app.post("/users", async (request, response) => {
-  //Hash password using bcrypt
   const hashedPwd = await bcrypt.hashSync(request.body.password, saltRounds);
-  console.log("Hashed password: ", hashedPwd);
   try {
     const user = await User.create({
       firstName: request.body.firstName,
@@ -84,12 +91,16 @@ app.post("/users", async (request, response) => {
     });
     request.login(user, (err) => {
       if (err) {
-        console.log(err);
+        request.flash("error_msg", "Login after signup failed");
+        return response.redirect("/login");
       }
-      response.redirect("/todos");
+      request.flash("success_msg", "Successfully signed up and logged in!");
+      return response.redirect("/todos");
     });
   } catch (error) {
     console.log(error);
+    request.flash("error_msg", "Email already in use or invalid data");
+    return response.redirect("/signup");
   }
 });
 
@@ -106,9 +117,12 @@ app.get("/login", (request, response) => {
 
 app.post(
   "/session",
-  passport.authenticate("local", { failureRedirect: "/login" }),
+  passport.authenticate("local", {
+    failureRedirect: "/login",
+    failureFlash: true,
+  }),
   (request, response) => {
-    console.log(request.user);
+    request.flash("success_msg", "Successfully logged in!");
     response.redirect("/todos");
   },
 );
@@ -118,7 +132,8 @@ app.get("/signout", (request, response, next) => {
     if (err) {
       return next(err);
     }
-    response.redirect("/");
+    request.flash("success_msg", "You have been signed out");
+    response.redirect("/login");
   });
 });
 
