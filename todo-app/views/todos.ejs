@@ -22,7 +22,7 @@
     </div>
       
     <ul class="list-none">
-        <li class="Todo-Item">
+        
 
             <% for (var i = 0; i < allTodos.length; i++) { %>
                 <% if (new Date(allTodos[i].dueDate) < today && loggedInUser === allTodos[i].userId) { %>
@@ -37,9 +37,10 @@
                         </svg>
                     </a>
                 </div> 
+            </li>
                 <% } %>  
                 <% } %>                       
-        </li>
+        
     </ul>
         
 
@@ -54,7 +55,7 @@
     </div>
 
     <ul class="list-none">
-        <li class="Todo-Item">
+        
 
             <% for (var i = 0; i < allTodos.length; i++) { %>
                 <% if (stripTime(new Date(allTodos[i].dueDate)).getTime() === today.getTime() && loggedInUser === allTodos[i].userId) { %>
@@ -70,9 +71,10 @@
                         </svg>
                     </a>
                 </div> 
+                </li>
                 <% } %>  
                 <% } %>                       
-        </li>
+        
     </ul>
 
     
@@ -87,7 +89,6 @@
     
     </div>
     <ul class="list-none">
-        <li class="Todo-Item">
 
             <% for (var i = 0; i < allTodos.length; i++) { %>
                 <% if (new Date(allTodos[i].dueDate) > today && loggedInUser === allTodos[i].userId) { %>
@@ -103,9 +104,10 @@
                         </svg>
                     </a>
                 </div> 
+            </li>
                 <% } %>  
                 <% } %>                       
-        </li>
+        
     </ul>
 
     <h5>Completed Items</h5>
@@ -119,11 +121,11 @@
     
     </div>
     <ul class="list-none">
-        <li class="Todo-Item">
             <% for (var i = 0; i < allTodos.length; i++) { %>
                 <% if (allTodos[i].completed && loggedInUser === allTodos[i].userId) { %>
                     <span style="text-decoration: line-through;"><%= allTodos[i].title %></span>
+                     </li>  
                 <% } %>  
                 <% } %> 
-        </li>    
+         
     </ul>
