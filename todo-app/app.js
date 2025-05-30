@@ -136,7 +136,7 @@ app.get("/signout", (request, response, next) => {
       return next(err);
     }
     request.flash("success_msg", "You have been signed out");
-    response.redirect("/login");
+    response.redirect("/");
   });
 });
 
