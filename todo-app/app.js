@@ -48,15 +48,18 @@ passport.use(
     (username, password, done) => {
       User.findOne({ where: { email: username } })
         .then(async (user) => {
+          if (!user) {
+            return done(null, false, { message: "User not found" });
+          }
           const result = await bcrypt.compare(password, user.password);
           if (result) {
             return done(null, user);
           } else {
-            return done("Invalid password");
+            return done(null, false, { message: "Invalid password" });
           }
         })
         .catch((error) => {
-          return error;
+          return done(error);
         });
     },
   ),
