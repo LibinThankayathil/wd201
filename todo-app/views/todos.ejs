@@ -9,12 +9,12 @@
     let completedCount = 0;
     %>
 
-
+    
     
     <h5 class="flex">Overdue</h5>
     <div id = "count-overdue" class="w-6 h-6 bg-gray-200 text-gray-800 rounded-sm flex items-center justify-center text-sm font-medium">
         <% for (var i = 0; i < allTodos.length; i++) { %>
-            <% if (new Date(allTodos[i].dueDate) < today) { %>
+            <% if (new Date(allTodos[i].dueDate) < today && loggedInUser === allTodos[i].userId) { %>
                 <% overdueCount++; %>
             <% } %>  
             <% } %>
@@ -25,7 +25,7 @@
         <li class="Todo-Item">
 
             <% for (var i = 0; i < allTodos.length; i++) { %>
-                <% if (new Date(allTodos[i].dueDate) < today) { %>
+                <% if (new Date(allTodos[i].dueDate) < today && loggedInUser === allTodos[i].userId) { %>
                 <div class="flex items-center w-fit my-2 px-2 py-1 hover:bg-purple-50 rounded">
                     <input id="todo-checkbox-<%= allTodos[i].id %>" type="checkbox" <%= allTodos[i].completed ? "checked" : "" %> onclick="updateTodo(<%= allTodos[i].id %>)" name=""  class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300">
                     <label for="todo-checkbox-<%= allTodos[i].id %>" class="ml-2 text-sm text-gray-600 cursor-pointer">
@@ -46,7 +46,7 @@
     <h5>Due Today</h5>
     <div id = "count-due-today" class="w-6 h-6 bg-gray-200 text-gray-800 rounded-sm flex items-center justify-center text-sm font-medium">
         <% for (var i = 0; i < allTodos.length; i++) { %>
-            <% if (stripTime(new Date(allTodos[i].dueDate)).getTime() === today.getTime()) { %>
+            <% if (stripTime(new Date(allTodos[i].dueDate)).getTime() === today.getTime() && loggedInUser === allTodos[i].userId) { %>
                 <% dueTodayCount++; %>
             <% } %>  
             <% } %>
@@ -57,7 +57,7 @@
         <li class="Todo-Item">
 
             <% for (var i = 0; i < allTodos.length; i++) { %>
-                <% if (stripTime(new Date(allTodos[i].dueDate)).getTime() === today.getTime()) { %>
+                <% if (stripTime(new Date(allTodos[i].dueDate)).getTime() === today.getTime() && loggedInUser === allTodos[i].userId) { %>
 
                 <div class="flex items-center w-fit my-2 px-2 py-1 hover:bg-purple-50 rounded">
                     <input id="todo-checkbox-<%= allTodos[i].id %>" type="checkbox" <%= allTodos[i].completed ? "checked" : ""  %> onclick="updateTodo(<%= allTodos[i].id %>)" type="checkbox" name="" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300">
@@ -79,7 +79,7 @@
     <h5>Due Later</h5>
     <div id = "count-due-later" class="w-6 h-6 bg-gray-200 text-gray-800 rounded-sm flex items-center justify-center text-sm font-medium">
         <% for (var i = 0; i < allTodos.length; i++) { %>
-            <% if (new Date(allTodos[i].dueDate) > today) { %>
+            <% if (new Date(allTodos[i].dueDate) > today && loggedInUser === allTodos[i].userId) { %>
                 <% dueLaterCount++%>
             <% } %>  
             <% } %>
@@ -90,7 +90,7 @@
         <li class="Todo-Item">
 
             <% for (var i = 0; i < allTodos.length; i++) { %>
-                <% if (new Date(allTodos[i].dueDate) > today) { %>
+                <% if (new Date(allTodos[i].dueDate) > today && loggedInUser === allTodos[i].userId) { %>
 
                 <div class="flex items-center w-fit my-2 px-2 py-1 hover:bg-purple-50 rounded">
                     <input  id="todo-checkbox-<%= allTodos[i].id %>" type="checkbox" <%= allTodos[i].completed ? "checked" : "" %> onclick="updateTodo(<%= allTodos[i].id %>)" type="checkbox" name="" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300">
@@ -111,7 +111,7 @@
     <h5>Completed Items</h5>
     <div id = "count-completed" class="w-6 h-6 bg-gray-200 text-gray-800 rounded-sm flex items-center justify-center text-sm font-medium">
         <% for (var i = 0; i < allTodos.length; i++) { %>
-            <% if (allTodos[i].completed) { %>
+            <% if (allTodos[i].completed && loggedInUser === allTodos[i].userId) { %>
                 <% completedCount++%>
             <% } %>  
             <% } %>
@@ -121,7 +121,7 @@
     <ul class="list-none">
         <li class="Todo-Item">
             <% for (var i = 0; i < allTodos.length; i++) { %>
-                <% if (allTodos[i].completed) { %>
+                <% if (allTodos[i].completed && loggedInUser === allTodos[i].userId) { %>
                     <span style="text-decoration: line-through;"><%= allTodos[i].title %></span>
                 <% } %>  
                 <% } %> 
