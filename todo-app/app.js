@@ -141,6 +141,10 @@ app.get("/signout", (request, response, next) => {
 });
 
 app.get("/", async (request, response) => {
+  if (request.isAuthenticated && request.isAuthenticated()) {
+    return response.redirect("/todos");
+  }
+
   response.render("index", {
     title: "Todo application",
     csrfToken: request.csrfToken(),
